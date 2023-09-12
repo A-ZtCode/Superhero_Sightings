@@ -9,12 +9,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
@@ -76,5 +78,56 @@ public class SightingDAOImplTest {
         sightingDAO.deleteSightingById(1);
         // Checking for no errors.
     }
+
+    @Test
+    public void testAddSightingWithNullInputs() {
+        Sighting sighting = new Sighting();
+        sighting.setHero(null);
+        sighting.setLocation(null);
+        sighting.setDate(null);
+
+        assertThrows(Exception.class, () -> {
+            sightingDAO.addSighting(sighting);
+        });
+    }
+
+    @Test
+    public void testGetSightingByNonExistentId() {
+        int nonExistentId = 999;
+        when(jdbcTemplate.queryForObject(anyString(), any(RowMapper.class), eq(nonExistentId)))
+                .thenThrow(new EmptyResultDataAccessException(1));
+
+        assertThrows(Exception.class, () -> {
+            sightingDAO.getSightingById(nonExistentId);
+        });
+    }
+
+    @Test
+    public void testUpdateNonExistentSighting() {
+        Sighting sighting = new Sighting();
+        sighting.setId(999); // non-existent ID
+        sighting.setHero(new Hero(1, "Spiderman", "Wall-crawler", "Web-slinging"));
+        sighting.setLocation(new Location(1, "New York City", "Big Apple", "123 NYC Street", 40.7128, -74.0060));
+        sighting.setDate(LocalDate.now());
+
+        when(jdbcTemplate.update(anyString(), anyInt(), anyInt(), any(), anyInt())).thenReturn(0);
+
+        assertThrows(Exception.class, () -> {
+            sightingDAO.updateSighting(sighting);
+        });
+    }
+
+    @Test
+    public void testDeleteNonExistentSighting() {
+        int nonExistentId = 999; // Some ID that doesn't exist
+
+        // This would mock the behavior to return '0' indicating no records were deleted
+        when(jdbcTemplate.update(anyString(), eq(nonExistentId))).thenReturn(0);
+
+        int result = sightingDAO.deleteSightingById(nonExistentId);
+
+        assertEquals(0, result, "No records should be deleted for non-existent ID");
+    }
+
 }
 

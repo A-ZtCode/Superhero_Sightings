@@ -6,8 +6,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -81,6 +84,54 @@ public class LocationDAOImplTest {
     public void testDeleteLocationById() {
         when(jdbcTemplate.update(anyString(), anyInt())).thenReturn(1);
         locationDAO.deleteLocationById(1);
-        // Like update, you're mainly checking for no errors.
+        // Like update,  mainly checking for no errors.
     }
+
+    @Test
+    public void testAddLocationWithNullInputs() {
+        Location location = new Location();
+        location.setName(null);
+        location.setDescription(null);
+        location.setAddress(null);
+
+        assertThrows(Exception.class, () -> {
+            locationDAO.addLocation(location);
+        });
+    }
+
+    @Test
+    public void testGetLocationByNonExistentId() {
+        int nonExistentId = 999;
+        when(jdbcTemplate.queryForObject(anyString(), any(RowMapper.class), eq(nonExistentId)))
+                .thenThrow(new EmptyResultDataAccessException(1));
+
+        assertThrows(Exception.class, () -> {
+            locationDAO.getLocationById(nonExistentId);
+        });
+    }
+
+    @Test
+    public void testUpdateNonExistentLocation() {
+        Location location = new Location();
+        location.setId(999); // non-existent ID
+        location.setName("Metropolis");
+        location.setDescription("City of Tomorrow");
+
+        when(jdbcTemplate.update(anyString(), any(), any(), any(), any(), anyInt())).thenReturn(0);
+
+        assertThrows(Exception.class, () -> {
+            locationDAO.updateLocation(location);
+        });
+    }
+
+    @Test
+    public void testDeleteNonExistentLocation() {
+        int nonExistentId = 999;
+        when(jdbcTemplate.update(anyString(), eq(nonExistentId))).thenReturn(0);
+
+        assertThrows(Exception.class, () -> {
+            locationDAO.deleteLocationById(nonExistentId);
+        });
+    }
+
 }

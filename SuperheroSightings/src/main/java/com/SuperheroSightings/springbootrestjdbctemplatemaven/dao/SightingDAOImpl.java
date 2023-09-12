@@ -43,16 +43,18 @@ public class SightingDAOImpl implements SightingDAO {
         return jdbcTemplate.query(sql, new SightingMapper());
     }
 
-    @Override
     public void updateSighting(Sighting sighting) {
         final String sql = "UPDATE Sightings SET hero_id=?, location_id=?, date=? WHERE sighting_id=?";
-        jdbcTemplate.update(sql, sighting.getHero().getId(), sighting.getLocation().getId(), sighting.getDate(), sighting.getId());
+        int rowsAffected = jdbcTemplate.update(sql, sighting.getHero().getId(), sighting.getLocation().getId(), sighting.getDate(), sighting.getId());
+        if(rowsAffected == 0) {
+            throw new RuntimeException("Attempted to update a non-existent sighting");
+        }
     }
 
     @Override
-    public void deleteSightingById(int id) {
+    public int deleteSightingById(int id) {
         final String sql = "DELETE FROM Sightings WHERE sighting_id=?";
-        jdbcTemplate.update(sql, id);
+        return jdbcTemplate.update(sql, id);
     }
 
     @Override

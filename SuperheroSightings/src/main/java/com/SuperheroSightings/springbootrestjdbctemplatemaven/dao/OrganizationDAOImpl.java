@@ -49,8 +49,13 @@ public class OrganizationDAOImpl implements OrganizationDAO{
     @Override
     public void deleteOrganizationById(int id) {
         final String sql = "DELETE FROM Organizations WHERE organization_id=?";
-        jdbcTemplate.update(sql, id);
+        int rowsAffected = jdbcTemplate.update(sql, id);
+
+        if(rowsAffected == 0) {
+            throw new RuntimeException("Attempted to delete a non-existent organization");
+        }
     }
+
 
     @Override
     public List<Organization> getOrganizationsByHeroId(int heroId) {

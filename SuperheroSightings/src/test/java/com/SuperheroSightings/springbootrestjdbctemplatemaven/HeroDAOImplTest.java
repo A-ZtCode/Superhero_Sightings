@@ -6,8 +6,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -101,5 +104,58 @@ public class HeroDAOImplTest {
 
         assertEquals(heroes, result);
     }
+
+    // Test Add Hero with Null Inputs:
+    @Test
+    public void testAddHeroWithNullInputs() {
+        Hero hero = new Hero();
+        hero.setName(null);
+        hero.setDescription(null);
+        hero.setSuperpower(null);
+
+        assertThrows(Exception.class, () -> {
+            heroDAO.addHero(hero);
+        });
+    }
+
+    // Test Get Hero By Non-Existent ID:
+    @Test
+    public void testGetHeroByNonExistentId() {
+        int nonExistentId = 999;
+        when(jdbcTemplate.queryForObject(anyString(), any(RowMapper.class), eq(nonExistentId)))
+                .thenThrow(new EmptyResultDataAccessException(1));
+
+        assertThrows(Exception.class, () -> {
+            heroDAO.getHeroById(nonExistentId);
+        });
+    }
+
+    // Test Update Non-Existent Hero:
+    @Test
+    public void testUpdateNonExistentHero() {
+        Hero hero = new Hero();
+        hero.setId(999); // non-existent ID
+        hero.setName("Batman");
+        hero.setDescription("Dark Knight");
+        hero.setSuperpower("Intelligence");
+
+        when(jdbcTemplate.update(anyString(), any(), any(), any(), anyInt())).thenReturn(0);
+
+        assertThrows(Exception.class, () -> {
+            heroDAO.updateHero(hero);
+        });
+    }
+
+    // Test Delete Non-Existent Hero:
+    @Test
+    public void testDeleteNonExistentHero() {
+        int nonExistentId = 999;
+        when(jdbcTemplate.update(anyString(), eq(nonExistentId))).thenReturn(0);
+
+        assertThrows(Exception.class, () -> {
+            heroDAO.deleteHeroById(nonExistentId);
+        });
+    }
+
 }
 

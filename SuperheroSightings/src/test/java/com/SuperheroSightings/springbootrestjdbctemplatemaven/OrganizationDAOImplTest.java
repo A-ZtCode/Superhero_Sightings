@@ -8,8 +8,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -88,5 +90,53 @@ public class OrganizationDAOImplTest {
         organizationDAO.deleteOrganizationById(1);
         // Checking for no errors.
     }
+
+    @Test
+    public void testAddOrganizationWithNullInputs() {
+        Organization org = new Organization();
+        org.setName(null);
+        org.setDescription(null);
+        org.setAddressContactInfo(null);
+
+        assertThrows(Exception.class, () -> {
+            organizationDAO.addOrganization(org);
+        });
+    }
+
+    @Test
+    public void testGetOrganizationByNonExistentId() {
+        int nonExistentId = 999;
+        when(jdbcTemplate.queryForObject(anyString(), any(RowMapper.class), eq(nonExistentId)))
+                .thenThrow(new EmptyResultDataAccessException(1));
+
+        assertThrows(Exception.class, () -> {
+            organizationDAO.getOrganizationById(nonExistentId);
+        });
+    }
+
+    @Test
+    public void testUpdateNonExistentOrganization() {
+        Organization org = new Organization();
+        org.setId(999); // non-existent ID
+        org.setName("X-Men");
+        org.setDescription("Mutants");
+
+        when(jdbcTemplate.update(anyString(), any(), any(), anyInt())).thenReturn(0);
+
+        assertThrows(Exception.class, () -> {
+            organizationDAO.updateOrganization(org);
+        });
+    }
+
+    @Test
+    public void testDeleteNonExistentOrganization() {
+        int nonExistentId = 999;
+        when(jdbcTemplate.update(anyString(), eq(nonExistentId))).thenReturn(0);
+
+        assertThrows(Exception.class, () -> {
+            organizationDAO.deleteOrganizationById(nonExistentId);
+        });
+    }
+
 }
 

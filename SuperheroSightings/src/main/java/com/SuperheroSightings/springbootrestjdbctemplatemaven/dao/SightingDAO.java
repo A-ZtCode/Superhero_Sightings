@@ -10,7 +10,7 @@ public interface SightingDAO {
     Sighting getSightingById(int id);
     List<Sighting> getAllSightings();
     void updateSighting(Sighting sighting);
-    void deleteSightingById(int id);
+    int deleteSightingById(int id);
     List<Sighting> getSightingsByDate(LocalDate date);
     List<Sighting> getSightingsByLocationId(int locationId);
     List<Sighting> getSightingsByHeroId(int heroId);
