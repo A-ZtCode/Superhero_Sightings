@@ -1,5 +1,7 @@
 package com.SuperheroSightings.springbootrestjdbctemplatemaven.model;
 
+import lombok.*;
+
 public class Hero {
     private int id;
     private String name;
