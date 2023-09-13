@@ -1,4 +1,4 @@
-package com.SuperheroSightings.springbootrestjdbctemplatemaven.model;
+package com.SuperheroSightings.springbootrestjdbctemplatemaven.modeldto;
 
 import java.time.LocalDate;
 

@@ -1,7 +1,7 @@
 package com.SuperheroSightings.springbootrestjdbctemplatemaven;
 
 import com.SuperheroSightings.springbootrestjdbctemplatemaven.dao.HeroDAOImpl;
-import com.SuperheroSightings.springbootrestjdbctemplatemaven.model.Hero;
+import com.SuperheroSightings.springbootrestjdbctemplatemaven.modeldto.Hero;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

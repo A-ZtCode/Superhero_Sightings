@@ -1,6 +1,6 @@
 package com.SuperheroSightings.springbootrestjdbctemplatemaven.dao;
 
-import com.SuperheroSightings.springbootrestjdbctemplatemaven.model.Hero;
+import com.SuperheroSightings.springbootrestjdbctemplatemaven.modeldto.Hero;
 
 import java.util.List;
 

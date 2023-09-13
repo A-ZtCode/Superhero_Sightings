@@ -1,8 +1,8 @@
 package com.SuperheroSightings.springbootrestjdbctemplatemaven.dao;
 
-import com.SuperheroSightings.springbootrestjdbctemplatemaven.model.Hero;
-import com.SuperheroSightings.springbootrestjdbctemplatemaven.model.Location;
-import com.SuperheroSightings.springbootrestjdbctemplatemaven.model.Sighting;
+import com.SuperheroSightings.springbootrestjdbctemplatemaven.modeldto.Hero;
+import com.SuperheroSightings.springbootrestjdbctemplatemaven.modeldto.Location;
+import com.SuperheroSightings.springbootrestjdbctemplatemaven.modeldto.Sighting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;

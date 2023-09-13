@@ -1,7 +1,8 @@
-package com.SuperheroSightings.springbootrestjdbctemplatemaven.model;
+package com.SuperheroSightings.springbootrestjdbctemplatemaven.modeldto;
 
-import lombok.*;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public class Hero {
     private int id;
     private String name;

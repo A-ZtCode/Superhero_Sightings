@@ -1,6 +1,6 @@
 package com.SuperheroSightings.springbootrestjdbctemplatemaven.dao;
 
-import com.SuperheroSightings.springbootrestjdbctemplatemaven.model.Sighting;
+import com.SuperheroSightings.springbootrestjdbctemplatemaven.modeldto.Sighting;
 
 import java.time.LocalDate;
 import java.util.List;

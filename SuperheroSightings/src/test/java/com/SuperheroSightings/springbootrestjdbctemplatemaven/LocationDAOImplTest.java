@@ -1,7 +1,7 @@
 package com.SuperheroSightings.springbootrestjdbctemplatemaven;
 
 import com.SuperheroSightings.springbootrestjdbctemplatemaven.dao.LocationDAOImpl;
-import com.SuperheroSightings.springbootrestjdbctemplatemaven.model.Location;
+import com.SuperheroSightings.springbootrestjdbctemplatemaven.modeldto.Location;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
