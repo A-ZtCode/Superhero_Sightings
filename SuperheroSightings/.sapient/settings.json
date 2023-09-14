@@ -1,0 +1,15 @@
+{
+  "testDirectory": "src/test/java/",
+  "testDirectoryOverrideStatus": false,
+  "unitTestLibrary": "JUNIT5",
+  "mockingLibrary": "MOCKITO",
+  "assertionLibrary": "HAMCREST",
+  "setAutoComplete": false,
+  "fileNamePattern": "{sourceClassName}Test.java",
+  "fileNamePatternOverrideStatus": true,
+  "weightChoice": "LinesOfCode",
+  "weightConfig": {
+    "low": 20,
+    "mid": 50
+  }
+}
