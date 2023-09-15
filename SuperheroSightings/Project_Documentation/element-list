@@ -1,0 +1,5 @@
+com.SuperheroSightings.springbootrestjdbctemplatemaven
+com.SuperheroSightings.springbootrestjdbctemplatemaven.controller
+com.SuperheroSightings.springbootrestjdbctemplatemaven.dao
+com.SuperheroSightings.springbootrestjdbctemplatemaven.modeldto
+com.SuperheroSightings.springbootrestjdbctemplatemaven.service
