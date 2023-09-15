@@ -5,6 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * @author Mercy Aigbe Azeta
+ * @version 1.0
+ * @since (2023-09-11)
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

@@ -6,53 +6,89 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 /**
+ * Controller class for managing CRUD operations related to Heroes.
  *
- */
+ * This class provides RESTful API endpoints for client applications to perform operations
+ * on the Hero entity. It supports creating, updating, deleting, and retrieving hero records.
+ *
+*/
 @RestController
 @RequestMapping("/heroes")
 public class HeroController {
 
     private final HeroService heroService;
 
+    /**
+     * Constructor that initializes the HeroService dependency.
+     *
+     * @param heroService Service class for hero operations.
+     */
     @Autowired
     public HeroController(HeroService heroService) {
         this.heroService = heroService;
     }
 
-    // Add a new hero
-    // POST http://localhost:8080/heroes
+    /**
+     * Creates /adds a new hero record.
+     *
+     * @param hero Hero object containing details of the hero to be created.
+     * @return Created/added hero with the assigned ID.
+     *
+     * API Endpoint: POST http://localhost:8080/heroes
+     */
     @PostMapping
     public Hero addHero(@RequestBody Hero hero) {
         return heroService.addHero(hero);
     }
 
-    // Update details of a specific hero by ID
-    // PUT http://localhost:8080/heroes/{id}
+    /**
+     * Updates details of a specific hero identified by its ID.
+     *
+     * @param id ID of the hero to be updated.
+     * @param hero Hero object containing updated details.
+     * @return Updated hero object.
+     *
+     * API Endpoint: PUT http://localhost:8080/heroes/{id}
+     */
     @PutMapping("/{id}")
     public Hero updateHero(@PathVariable int id, @RequestBody Hero hero) {
         hero.setId(id);
         return heroService.updateHero(hero);
     }
 
-    // Retrieve a specific hero by ID
-    // GET http://localhost:8080/heroes/{id}
-
+    /**
+     * Retrieves details of a specific hero identified by its ID.
+     *
+     * @param id ID of the hero to be retrieved.
+     * @return Hero object containing details of the specified hero.
+     *
+     * API Endpoint: GET http://localhost:8080/heroes/{id}
+     */
     @GetMapping("/{id}")
     public Hero getHero(@PathVariable int id) {
         return heroService.getHeroById(id);
     }
 
-    // Delete a specific hero by ID
-    // DELETE http://localhost:8080/heroes/{id}
+    /**
+     * Deletes a specific hero identified by its ID.
+     *
+     * @param id ID of the hero to be deleted.
+     *
+     * API Endpoint: DELETE http://localhost:8080/heroes/{id}
+     */
     @DeleteMapping("/{id}")
     public void deleteHero(@PathVariable int id) {
         heroService.deleteHero(id);
     }
 
-    // Retrieve all heroes
-    // GET http://localhost:8080/heroes
+    /**
+     * Retrieves a list of all heroes in the system.
+     *
+     * @return List of Hero objects.
+     *
+     * API Endpoint:</b> GET http://localhost:8080/heroes
+     */
     @GetMapping
     public List<Hero> getAllHeroes() {
         return heroService.getAllHeroes();

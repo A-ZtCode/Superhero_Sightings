@@ -7,6 +7,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controller class for managing CRUD operations related to Organizations.
+ *
+ * This class provides RESTful API endpoints for client applications to perform operations
+ * on the Organization entity. It supports creating, updating, deleting, and retrieving organization records.
+ */
 @RestController
 @RequestMapping("/organizations")
 public class OrganizationController {
@@ -18,37 +24,68 @@ public class OrganizationController {
         this.organizationService = organizationService;
     }
 
-    // Add a new organization
-    // POST http://localhost:8080/organizations
+    /**
+     * Creates a new organization record.
+     *
+     * API Endpoint: POST http://localhost:8080/organizations
+     * Body: JSON representation of the organization to create
+     *
+     * @param organization Organization object containing details of the organization to be created.
+     * @return Created organization with the assigned ID.
+     */
     @PostMapping
     public Organization addOrganization(@RequestBody Organization organization) {
         return organizationService.addOrganization(organization);
     }
 
-    // Retrieve a specific organization by ID
-    // GET http://localhost:8080/organizations/{id}
+    /**
+     * Retrieves details of a specific organization identified by its ID.
+     *
+     * API Endpoint: GET http://localhost:8080/organizations/{id}
+     *
+     * @param id ID of the organization to be retrieved.
+     * @return Organization object with the specified ID.
+     */
     @GetMapping("/{id}")
     public Organization getOrganization(@PathVariable int id) {
         return organizationService.getOrganizationById(id);
     }
 
-    // Update details of a specific organization by ID
-    // PUT http://localhost:8080/organizations/{id}
+    /**
+     * Updates details of a specific organization identified by its ID.
+     *
+     * API Endpoint: PUT http://localhost:8080/organizations/{id}
+     * Body: JSON representation of the updated organization details
+     *
+     * @param id ID of the organization to be updated.
+     * @param organization Organization object containing updated details.
+     * @return Updated organization details.
+     */
     @PutMapping("/{id}")
     public Organization updateOrganization(@PathVariable int id, @RequestBody Organization organization) {
         organization.setId(id);
         return organizationService.updateOrganization(organization);
     }
 
-    // Delete a specific organization by ID
-    // DELETE http://localhost:8080/organizations/{id}
+    /**
+     * Deletes a specific organization identified by its ID.
+     *
+     * API Endpoint: DELETE http://localhost:8080/organizations/{id}
+     *
+     * @param id ID of the organization to be deleted.
+     */
     @DeleteMapping("/{id}")
     public void deleteOrganization(@PathVariable int id) {
         organizationService.deleteOrganization(id);
     }
 
-    // Retrieve all organizations
-    // GET http://localhost:8080/organizations
+    /**
+     * Retrieves a list of all organizations in the system.
+     *
+     * API Endpoint: GET http://localhost:8080/organizations
+     *
+     * @return List of Organization objects.
+     */
     @GetMapping
     public List<Organization> getAllOrganizations() {
         return organizationService.getAllOrganizations();
