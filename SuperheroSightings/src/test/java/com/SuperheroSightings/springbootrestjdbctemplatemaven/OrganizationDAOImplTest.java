@@ -19,6 +19,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
+/**
+ * Test class for the OrganizationDAOImpl.
+ *
+ * This class contains unit tests for the OrganizationDAOImpl using the JUnit 5 framework
+ * and Mockito for mocking dependencies. It ensures that the data access object
+ * for organizations performs its CRUD operations correctly.
+ */
 @ExtendWith(MockitoExtension.class)
 public class OrganizationDAOImplTest {
 
@@ -28,6 +35,9 @@ public class OrganizationDAOImplTest {
     @InjectMocks
     private OrganizationDAOImpl organizationDAO;
 
+    /**
+     * Test for adding an organization.
+     */
     @Test
     public void testAddOrganization() {
         Organization organization = new Organization();
@@ -49,6 +59,9 @@ public class OrganizationDAOImplTest {
         assertEquals(1, result.getId());
     }
 
+    /**
+     * Test for retrieving an organization by its ID.
+     */
     @Test
     public void testGetOrganizationById() {
         Organization organization = new Organization();
@@ -63,6 +76,9 @@ public class OrganizationDAOImplTest {
         assertEquals(organization, result);
     }
 
+    /**
+     * Test for updating an organization's details.
+     */
     @Test
     public void testUpdateOrganization() {
         Organization organization = new Organization();
@@ -84,6 +100,9 @@ public class OrganizationDAOImplTest {
         // Checking for no errors.
     }
 
+    /**
+     * Test for deleting an organization by its ID.
+     */
     @Test
     public void testDeleteOrganizationById() {
         when(jdbcTemplate.update(anyString(), anyInt())).thenReturn(1);
@@ -91,6 +110,9 @@ public class OrganizationDAOImplTest {
         // Checking for no errors.
     }
 
+    /**
+     * Test for adding an organization with null inputs.
+     */
     @Test
     public void testAddOrganizationWithNullInputs() {
         Organization org = new Organization();
@@ -103,6 +125,9 @@ public class OrganizationDAOImplTest {
         });
     }
 
+    /**
+     * Test for retrieving an organization by a non-existent ID.
+     */
     @Test
     public void testGetOrganizationByNonExistentId() {
         int nonExistentId = 999;
@@ -114,6 +139,9 @@ public class OrganizationDAOImplTest {
         });
     }
 
+    /**
+     * Test for updating a non-existent organization.
+     */
     @Test
     public void testUpdateNonExistentOrganization() {
         Organization org = new Organization();
@@ -128,6 +156,9 @@ public class OrganizationDAOImplTest {
         });
     }
 
+    /**
+     * Test for deleting a non-existent organization.
+     */
     @Test
     public void testDeleteNonExistentOrganization() {
         int nonExistentId = 999;

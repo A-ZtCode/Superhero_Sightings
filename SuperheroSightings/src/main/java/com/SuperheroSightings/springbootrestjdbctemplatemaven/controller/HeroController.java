@@ -36,6 +36,7 @@ public class HeroController {
      * @return Created/added hero with the assigned ID.
      *
      * API Endpoint: POST http://localhost:8080/heroes
+     * Body: JSON representation of the Hero to add
      */
     @PostMapping
     public Hero addHero(@RequestBody Hero hero) {
@@ -50,6 +51,7 @@ public class HeroController {
      * @return Updated hero object.
      *
      * API Endpoint: PUT http://localhost:8080/heroes/{id}
+     *  Body: JSON representation of the updated Hero details
      */
     @PutMapping("/{id}")
     public Hero updateHero(@PathVariable int id, @RequestBody Hero hero) {
@@ -87,7 +89,7 @@ public class HeroController {
      *
      * @return List of Hero objects.
      *
-     * API Endpoint:</b> GET http://localhost:8080/heroes
+     * API Endpoint: GET http://localhost:8080/heroes
      */
     @GetMapping
     public List<Hero> getAllHeroes() {

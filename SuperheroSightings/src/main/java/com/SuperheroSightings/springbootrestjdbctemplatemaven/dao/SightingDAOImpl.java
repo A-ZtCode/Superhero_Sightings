@@ -116,7 +116,7 @@ public class SightingDAOImpl implements SightingDAO {
      * RowMapper implementation for mapping rows of the Sightings table into Sighting objects.
      */
     private static final class SightingMapper implements RowMapper<Sighting> {
-        
+
         /**
          * Maps a row from the result set to a Sighting object.
          *

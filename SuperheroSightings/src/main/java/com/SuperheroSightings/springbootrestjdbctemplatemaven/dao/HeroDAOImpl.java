@@ -66,8 +66,12 @@ public class HeroDAOImpl implements HeroDAO {
     @Override
     public void updateHero(Hero hero) {
         final String sql = "UPDATE Heroes SET name=?, description=?, superpower=? WHERE hero_id=?";
-        jdbcTemplate.update(sql, hero.getName(), hero.getDescription(), hero.getSuperpower(), hero.getId());
+        int updatedRows = jdbcTemplate.update(sql, hero.getName(), hero.getDescription(), hero.getSuperpower(), hero.getId());
+        if (updatedRows == 0) {
+            throw new RuntimeException("Hero with ID " + hero.getId() + " does not exist.");
+        }
     }
+
 
     /**
      * {@inheritDoc}
@@ -75,7 +79,10 @@ public class HeroDAOImpl implements HeroDAO {
     @Override
     public void deleteHeroById(int id) {
         final String sql = "DELETE FROM Heroes WHERE hero_id=?";
-        jdbcTemplate.update(sql, id);
+        int affectedRows = jdbcTemplate.update(sql, id);
+        if (affectedRows == 0) {
+            throw new RuntimeException("Hero with ID " + id + " does not exist.");
+        }
     }
 
     /**

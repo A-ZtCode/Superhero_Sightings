@@ -75,8 +75,13 @@ public class LocationDAOImpl implements LocationDAO{
     @Override
     public void deleteLocationById(int id) {
         final String sql = "DELETE FROM Locations WHERE location_id=?";
-        jdbcTemplate.update(sql, id);
+        int rowsAffected = jdbcTemplate.update(sql, id);
+
+        if (rowsAffected == 0) {
+            throw new RuntimeException("Location with ID " + id + " does not exist.");
+        }
     }
+
 
     /**
      * {@inheritDoc}

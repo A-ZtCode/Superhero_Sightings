@@ -21,7 +21,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-
+/**
+ * Test class for the HeroDAOImpl.
+ *
+ * This class contains unit tests for the HeroDAOImpl using the JUnit 5 framework
+ * and Mockito for mocking dependencies. It ensures that the data access object
+ * for heroes performs its CRUD operations correctly.
+ */
 @ExtendWith(MockitoExtension.class)
 public class HeroDAOImplTest {
 
@@ -31,6 +37,9 @@ public class HeroDAOImplTest {
     @InjectMocks
     private HeroDAOImpl heroDAO;
 
+    /**
+     * Test for adding a hero.
+     */
     @Test
     public void testAddHero() {
         Hero hero = new Hero();
@@ -46,6 +55,9 @@ public class HeroDAOImplTest {
         assertEquals(1, result.getId());
     }
 
+    /**
+     * Test for retrieving a hero by its ID.
+     */
     @Test
     public void testGetHeroById() {
         Hero hero = new Hero();
@@ -66,7 +78,9 @@ public class HeroDAOImplTest {
         assertEquals(hero, result);
     }
 
-
+    /**
+     * Test for updating a hero's details.
+     */
     @Test
     public void testUpdateHero() {
         Hero hero = new Hero();
@@ -82,6 +96,9 @@ public class HeroDAOImplTest {
         verify(jdbcTemplate, times(1)).update(anyString(), eq(hero.getName()), eq(hero.getDescription()), eq(hero.getSuperpower()), eq(hero.getId()));
     }
 
+    /**
+     * Test for deleting a hero by its ID.
+     */
     @Test
     public void testDeleteHero() {
         when(jdbcTemplate.update(anyString(), anyInt())).thenReturn(1);
@@ -91,6 +108,9 @@ public class HeroDAOImplTest {
         verify(jdbcTemplate, times(1)).update(anyString(), eq(1));
     }
 
+    /**
+     * Test for getting all heroes.
+     */
     @Test
     public void testGetAllHeroes() {
         List<Hero> heroes = List.of(
@@ -105,6 +125,9 @@ public class HeroDAOImplTest {
         assertEquals(heroes, result);
     }
 
+    /**
+     * Test for adding a hero with null inputs.
+     */
     // Test Add Hero with Null Inputs:
     @Test
     public void testAddHeroWithNullInputs() {
@@ -118,6 +141,9 @@ public class HeroDAOImplTest {
         });
     }
 
+    /**
+     * Test for retrieving a hero by a non-existent ID.
+     */
     // Test Get Hero By Non-Existent ID:
     @Test
     public void testGetHeroByNonExistentId() {
@@ -130,6 +156,9 @@ public class HeroDAOImplTest {
         });
     }
 
+    /**
+     * Test for updating a non-existent hero.
+     */
     // Test Update Non-Existent Hero:
     @Test
     public void testUpdateNonExistentHero() {
@@ -146,6 +175,9 @@ public class HeroDAOImplTest {
         });
     }
 
+    /**
+     * Test for deleting a non-existent hero.
+     */
     // Test Delete Non-Existent Hero:
     @Test
     public void testDeleteNonExistentHero() {

@@ -19,7 +19,13 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
+/**
+ * Test class for the LocationDAOImpl.
+ *
+ * This class contains unit tests for the LocationDAOImpl using the JUnit 5 framework
+ * and Mockito for mocking dependencies. It ensures that the data access object
+ * for locations performs its CRUD operations correctly.
+ */
 @ExtendWith(MockitoExtension.class)
 public class LocationDAOImplTest {
 
@@ -29,6 +35,9 @@ public class LocationDAOImplTest {
     @InjectMocks
     private LocationDAOImpl locationDAO;
 
+    /**
+     * Test for adding a location.
+     */
     @Test
     public void testAddLocation() {
         Location location = new Location(1, "Gotham City", "Dark and Brooding", "123 Bat Lane", 40.7128, 74.0060);
@@ -41,6 +50,9 @@ public class LocationDAOImplTest {
         assertEquals(1, result.getId());
     }
 
+    /**
+     * Test for retrieving a location by its ID.
+     */
     @Test
     public void testGetLocationById() {
         Location location = new Location();
@@ -57,6 +69,9 @@ public class LocationDAOImplTest {
         assertEquals(location, result);
     }
 
+    /**
+     * Test for updating a location's details.
+     */
     @Test
     public void testUpdateLocation() {
         Location location = new Location();
@@ -80,6 +95,9 @@ public class LocationDAOImplTest {
         locationDAO.updateLocation(location);
     }
 
+    /**
+     * Test for deleting a location by its ID.
+     */
     @Test
     public void testDeleteLocationById() {
         when(jdbcTemplate.update(anyString(), anyInt())).thenReturn(1);
@@ -87,6 +105,9 @@ public class LocationDAOImplTest {
         // Like update,  mainly checking for no errors.
     }
 
+    /**
+     * Test for adding a location with null inputs.
+     */
     @Test
     public void testAddLocationWithNullInputs() {
         Location location = new Location();
@@ -99,6 +120,9 @@ public class LocationDAOImplTest {
         });
     }
 
+    /**
+     * Test for retrieving a location by a non-existent ID.
+     */
     @Test
     public void testGetLocationByNonExistentId() {
         int nonExistentId = 999;
@@ -110,6 +134,9 @@ public class LocationDAOImplTest {
         });
     }
 
+    /**
+     * Test for updating a non-existent location.
+     */
     @Test
     public void testUpdateNonExistentLocation() {
         Location location = new Location();
@@ -124,6 +151,9 @@ public class LocationDAOImplTest {
         });
     }
 
+    /**
+     * Test for deleting a non-existent location.
+     */
     @Test
     public void testDeleteNonExistentLocation() {
         int nonExistentId = 999;

@@ -20,6 +20,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
+/**
+ * Test class for the SightingDAOImpl.
+ *
+ * This class contains unit tests for the SightingDAOImpl using the JUnit 5 framework
+ * and Mockito for mocking dependencies. It ensures that the data access object
+ * for sightings performs its CRUD operations correctly.
+ */
 @ExtendWith(MockitoExtension.class)
 public class SightingDAOImplTest {
 
@@ -29,6 +36,9 @@ public class SightingDAOImplTest {
     @InjectMocks
     private SightingDAOImpl sightingDAO;
 
+    /**
+     * Test for adding a sighting.
+     */
     @Test
     public void testAddSighting() {
         Sighting sighting = new Sighting();
@@ -44,6 +54,9 @@ public class SightingDAOImplTest {
         assertEquals(1, result.getId());
     }
 
+    /**
+     * Test for retrieving a sighting by its ID.
+     */
     @Test
     public void testGetSightingById() {
         Sighting sighting = new Sighting();
@@ -58,6 +71,9 @@ public class SightingDAOImplTest {
         assertEquals(sighting, result);
     }
 
+    /**
+     * Test for updating a sighting's details.
+     */
     @Test
     public void testUpdateSighting() {
         Sighting sighting = new Sighting();
@@ -72,6 +88,9 @@ public class SightingDAOImplTest {
         // Checking for no errors.
     }
 
+    /**
+     * Test for deleting a sighting by its ID.
+     */
     @Test
     public void testDeleteSightingById() {
         when(jdbcTemplate.update(anyString(), anyInt())).thenReturn(1);
@@ -79,6 +98,9 @@ public class SightingDAOImplTest {
         // Checking for no errors.
     }
 
+    /**
+     * Test for adding a sighting with null inputs.
+     */
     @Test
     public void testAddSightingWithNullInputs() {
         Sighting sighting = new Sighting();
@@ -91,6 +113,9 @@ public class SightingDAOImplTest {
         });
     }
 
+    /**
+     * Test for retrieving a sighting by a non-existent ID.
+     */
     @Test
     public void testGetSightingByNonExistentId() {
         int nonExistentId = 999;
@@ -102,6 +127,9 @@ public class SightingDAOImplTest {
         });
     }
 
+    /**
+     * Test for updating a non-existent sighting.
+     */
     @Test
     public void testUpdateNonExistentSighting() {
         Sighting sighting = new Sighting();
@@ -117,6 +145,9 @@ public class SightingDAOImplTest {
         });
     }
 
+    /**
+     * Test for deleting a non-existent sighting.
+     */
     @Test
     public void testDeleteNonExistentSighting() {
         int nonExistentId = 999; // Some ID that doesn't exist
