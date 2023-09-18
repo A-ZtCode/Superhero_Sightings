@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add/Edit Hero</title>
+</head>
+<body>
+<h1 th:if="${hero.id == null}">Add Hero</h1>
+<h1 th:unless="${hero.id == null}">Edit Hero</h1>
+
+<form th:action="@{/heroes/save}" th:object="${hero}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <div>
+        <label>Name:</label>
+        <input type="text" th:field="*{name}" required/>
+    </div>
+    <div>
+        <label>Description:</label>
+        <textarea th:field="*{description}" required></textarea>
+    </div>
+    <div>
+        <label>Superpower:</label>
+        <input type="text" th:field="*{superpower}" required/>
+    </div>
+    <button type="submit">Save</button>
+</form>
+<a href="/heroes">Back to Heroes List</a>
+</body>
+</html>

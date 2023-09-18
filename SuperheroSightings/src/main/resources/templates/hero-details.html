@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Hero Details</title>
+</head>
+<body>
+<h1 th:text="${hero.name}"></h1>
+<p><strong>Description:</strong> <span th:text="${hero.description}"></span></p>
+<p><strong>Superpower:</strong> <span th:text="${hero.superpower}"></span></p>
+<a href="/heroes">Back to Heroes List</a>
+</body>
+</html>

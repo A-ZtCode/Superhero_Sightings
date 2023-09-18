@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Heroes List</title>
+</head>
+<body>
+<h1>Heroes</h1>
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Superpower</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="hero : ${heroes}">
+    <td th:text="${hero.name}"></td>
+    <td th:text="${hero.description}"></td>
+    <td th:text="${hero.superpower}"></td>
+    <td>
+      <a th:href="@{/heroes/edit/{id}(id=${hero.id})}">Edit</a>
+      <a th:href="@{/heroes/delete/{id}(id=${hero.id})}">Delete</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<a href="/heroes/add">Add New Hero</a>
+</body>
+</html>
