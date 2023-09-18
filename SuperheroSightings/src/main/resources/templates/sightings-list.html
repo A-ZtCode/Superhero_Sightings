@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Sightings</title>
+</head>
+<body>
+<h1>Sightings</h1>
+<table>
+  <thead>
+  <tr>
+    <th>Superhero/Villain</th>
+    <th>Location</th>
+    <th>Date</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="sighting : ${sightings}">
+    <td th:text="${sighting.hero.name}"></td>
+    <td th:text="${sighting.location.name}"></td>
+    <td th:text="${sighting.date}"></td>
+    <td>
+      <a th:href="@{/sightings/{id}(id=${sighting.id})}">View</a>
+      <!-- Similarly, you can add Edit and Delete links here. -->
+    </td>
+  </tr>
+  </tbody>
+</table>
+<a href="/sightings/new">Add New Sighting</a>
+</body>
+</html>

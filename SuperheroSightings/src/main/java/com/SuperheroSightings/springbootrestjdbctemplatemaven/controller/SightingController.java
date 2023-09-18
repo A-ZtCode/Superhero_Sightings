@@ -3,6 +3,8 @@ package com.SuperheroSightings.springbootrestjdbctemplatemaven.controller;
 import com.SuperheroSightings.springbootrestjdbctemplatemaven.modeldto.Sighting;
 import com.SuperheroSightings.springbootrestjdbctemplatemaven.service.SightingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.List;
  * This class provides RESTful API endpoints for client applications to perform operations
  * on the Sighting entity. It supports creating, updating, deleting, and retrieving sighting records.
  */
-@RestController
+@Controller
 @RequestMapping("/sightings")
 public class SightingController {
 
@@ -87,7 +89,56 @@ public class SightingController {
      * @return List of Sighting objects.
      */
     @GetMapping
+    @ResponseBody
     public List<Sighting> getAllSightings() {
         return sightingService.getAllSightings();
+    }
+
+    /**
+     * Displays the form to add a new sighting.
+     *
+     * API Endpoint: GET http://localhost:8080/sighting/new
+     *
+     * @param model The model that holds data for the view.
+     * @return The name of the view template (Thymeleaf template) to be rendered.
+     */
+    @GetMapping("/sighting/new")
+    public String showAddSightingForm(Model model) {
+        model.addAttribute("sighting", new Sighting());
+        return "sighting-form";
+    }
+
+    /**
+     * Displays the form to edit an existing sighting.
+     *
+     * API Endpoint: GET http://localhost:8080/sighting/edit/{id}
+     *
+     * @param id The ID of the sighting to be edited.
+     * @param model The model that holds data for the view.
+     * @return The name of the view template (Thymeleaf template) to be rendered.
+     */
+    @GetMapping("/sighting/edit/{id}")
+    public String showEditSightingForm(@PathVariable int id, Model model) {
+        Sighting sighting = sightingService.getSightingById(id);
+        model.addAttribute("sighting", sighting);
+        return "sighting-form";
+    }
+    /**
+     * Handles the form submission for adding a new sighting or updating an existing one.
+     *
+     * API Endpoint: POST http://localhost:8080/sighting/save
+     *
+     * @param sighting The Sighting object populated from the form.
+     * @param model The model that holds data for the view.
+     * @return Redirect to the list of sightings.
+     */
+    @PostMapping("/sighting/save")
+    public String saveSighting(Sighting sighting, Model model) {
+        if (sighting.getId() == null) {
+            sightingService.addSighting(sighting);
+        } else {
+            sightingService.updateSighting(sighting);
+        }
+        return "redirect:/sightings";
     }
 }

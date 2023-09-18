@@ -1,6 +1,7 @@
 package com.SuperheroSightings.springbootrestjdbctemplatemaven.service;
 
 import com.SuperheroSightings.springbootrestjdbctemplatemaven.modeldto.Organization;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -12,6 +13,8 @@ import java.util.List;
  * and other required operations are applied consistently across organization-related functionalities.
  * Implementing classes should provide the concrete implementation for each method.
  */
+
+@Service
 public interface OrganizationService {
 
     /**

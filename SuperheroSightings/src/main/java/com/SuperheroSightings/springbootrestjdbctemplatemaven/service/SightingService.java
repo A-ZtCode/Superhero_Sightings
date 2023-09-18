@@ -1,6 +1,7 @@
 package com.SuperheroSightings.springbootrestjdbctemplatemaven.service;
 
 import com.SuperheroSightings.springbootrestjdbctemplatemaven.modeldto.Sighting;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -14,6 +15,8 @@ import java.util.List;
  * Implementing classes will provide concrete implementations of these methods, ensuring the correct
  * business logic and operations are applied consistently across sighting-related functionalities.
  */
+
+@Service
 public interface SightingService {
 
     /**

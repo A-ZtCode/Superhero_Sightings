@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Add/Edit Sighting</title>
+</head>
+<body>
+<h1 th:if="${sighting.id == null}">Add Sighting</h1>
+<h1 th:if="${sighting.id != null}">Edit Sighting</h1>
+<form th:action="@{/sightings}" th:object="${sighting}" method="post">
+  <!-- Fields for superhero, location, and date/time. -->
+  <!-- Using dropdowns for superhero and location would be ideal. -->
+  <div>
+    <label>Date:</label>
+    <input type="date" th:field="*{date}" />
+  </div>
+  <div>
+    <input type="submit" value="Save" />
+  </div>
+</form>
+<a href="/sightings">Cancel</a>
+</body>
+</html>

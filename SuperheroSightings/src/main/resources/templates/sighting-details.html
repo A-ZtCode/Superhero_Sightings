@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Sighting Details</title>
+</head>
+<body>
+<h1 th:text="${sighting.hero.name} + ' Sighting'"></h1>
+<p><strong>Location:</strong> <span th:text="${sighting.location.name}"></span></p>
+<p><strong>Date:</strong> <span th:text="${sighting.date}"></span></p>
+<a href="/sightings">Back to Sightings List</a>
+</body>
+</html>

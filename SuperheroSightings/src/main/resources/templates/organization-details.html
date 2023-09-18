@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Organization Details</title>
+</head>
+<body>
+<h1 th:text="${organization.name}"></h1>
+<p><strong>Description:</strong> <span th:text="${organization.description}"></span></p>
+<p><strong>Members:</strong> <span th:text="${organization.members.size()}"></span></p>
+<!-- Display other organization details as needed. -->
+<a href="/organizations">Back to Organizations List</a>
+</body>
+</html>

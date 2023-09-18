@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Organizations</title>
+</head>
+<body>
+<h1>Organizations</h1>
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Members</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="organization : ${organizations}">
+    <td th:text="${organization.name}"></td>
+    <td th:text="${organization.description}"></td>
+    <td th:text="${organization.members.size()}"></td>
+    <td>
+      <a th:href="@{/organizations/{id}(id=${organization.id})}">View</a>
+      <!-- Similarly, you can add Edit and Delete links here. -->
+    </td>
+  </tr>
+  </tbody>
+</table>
+<a href="/organizations/new">Add New Organization</a>
+</body>
+</html>

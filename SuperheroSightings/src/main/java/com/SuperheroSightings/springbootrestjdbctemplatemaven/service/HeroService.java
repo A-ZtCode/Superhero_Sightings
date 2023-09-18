@@ -1,6 +1,8 @@
 package com.SuperheroSightings.springbootrestjdbctemplatemaven.service;
 
 import com.SuperheroSightings.springbootrestjdbctemplatemaven.modeldto.Hero;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 /**
@@ -14,6 +16,7 @@ import java.util.List;
  * operations meet the specific business requirements of the application.
  *
  */
+@Service
 public interface HeroService {
 
     /**

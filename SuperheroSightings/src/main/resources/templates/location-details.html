@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Location Details</title>
+</head>
+<body>
+<h1 th:text="${location.name}"></h1>
+<p><strong>Description:</strong> <span th:text="${location.description}"></span></p>
+<p><strong>Address:</strong> <span th:text="${location.address}"></span></p>
+<a href="/locations">Back to Locations List</a>
+</body>
+</html>

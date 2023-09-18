@@ -61,9 +61,10 @@ public class SightingDAOImpl implements SightingDAO {
      */
     @Override
     public List<Sighting> getAllSightings() {
-        final String sql = "SELECT * FROM Sightings";
+        final String sql = "SELECT s.sighting_id, s.date, h.hero_id, h.name as hero_name, h.description as hero_description, h.superpower, l.location_id, l.name as location_name, l.description as location_description, l.address, l.latitude, l.longitude FROM Sightings s JOIN Heroes h ON s.hero_id = h.hero_id JOIN Locations l ON s.location_id = l.location_id";
         return jdbcTemplate.query(sql, new SightingMapper());
     }
+
 
     /**
      * {@inheritDoc}
@@ -129,15 +130,25 @@ public class SightingDAOImpl implements SightingDAO {
         public Sighting mapRow(ResultSet rs, int index) throws SQLException {
             Sighting sighting = new Sighting();
             sighting.setId(rs.getInt("sighting_id"));
+
             Hero hero = new Hero();
             hero.setId(rs.getInt("hero_id"));
+            hero.setName(rs.getString("hero_name"));
+            hero.setDescription(rs.getString("hero_description"));
+            hero.setSuperpower(rs.getString("superpower"));
             sighting.setHero(hero);
+
             Location location = new Location();
             location.setId(rs.getInt("location_id"));
+            location.setName(rs.getString("location_name"));
+            location.setDescription(rs.getString("location_description"));
+            location.setAddress(rs.getString("address"));
+            location.setLatitude(rs.getDouble("latitude"));
+            location.setLongitude(rs.getDouble("longitude"));
             sighting.setLocation(location);
+
             sighting.setDate(rs.getDate("date").toLocalDate());
             return sighting;
         }
     }
-
 }

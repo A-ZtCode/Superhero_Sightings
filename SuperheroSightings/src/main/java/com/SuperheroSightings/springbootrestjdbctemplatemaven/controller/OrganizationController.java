@@ -3,6 +3,8 @@ package com.SuperheroSightings.springbootrestjdbctemplatemaven.controller;
 import com.SuperheroSightings.springbootrestjdbctemplatemaven.modeldto.Organization;
 import com.SuperheroSightings.springbootrestjdbctemplatemaven.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.List;
  * This class provides RESTful API endpoints for client applications to perform operations
  * on the Organization entity. It supports creating, updating, deleting, and retrieving organization records.
  */
-@RestController
+@Controller // Change from RestController to Controller
 @RequestMapping("/organizations")
 public class OrganizationController {
 
@@ -87,7 +89,57 @@ public class OrganizationController {
      * @return List of Organization objects.
      */
     @GetMapping
+    @ResponseBody
     public List<Organization> getAllOrganizations() {
         return organizationService.getAllOrganizations();
+    }
+
+    /**
+     * Displays the form to add a new organization.
+     *
+     * API Endpoint: GET http://localhost:8080/organization/new
+     *
+     * @param model The model that holds data for the view.
+     * @return The name of the view template (Thymeleaf template) to be rendered.
+     */
+    @GetMapping("/organization/new")
+    public String showAddOrganizationForm(Model model) {
+        model.addAttribute("organization", new Organization());
+        return "organization-form";
+    }
+
+    /**
+     * Displays the form to edit an existing organization.
+     *
+     * API Endpoint: GET http://localhost:8080/organization/edit/{id}
+     *
+     * @param id The ID of the organization to be edited.
+     * @param model The model that holds data for the view.
+     * @return The name of the view template (Thymeleaf template) to be rendered.
+     */
+    @GetMapping("/organization/edit/{id}")
+    public String showEditOrganizationForm(@PathVariable int id, Model model) {
+        Organization organization = organizationService.getOrganizationById(id);
+        model.addAttribute("organization", organization);
+        return "organization-form";
+    }
+
+    /**
+     * Handles the form submission for adding a new organization or updating an existing one.
+     *
+     * API Endpoint: POST http://localhost:8080/organization/save
+     *
+     * @param organization The Organization object populated from the form.
+     * @param model The model that holds data for the view.
+     * @return Redirect to the list of organizations.
+     */
+    @PostMapping("/organization/save")
+    public String saveOrganization(Organization organization, Model model) {
+        if (organization.getId() == null) {
+            organizationService.addOrganization(organization);
+        } else {
+            organizationService.updateOrganization(organization);
+        }
+        return "redirect:/organizations"; // Redirect to the list of organizations
     }
 }

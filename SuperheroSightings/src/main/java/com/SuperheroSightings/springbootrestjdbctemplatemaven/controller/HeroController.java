@@ -3,6 +3,7 @@ package com.SuperheroSightings.springbootrestjdbctemplatemaven.controller;
 import com.SuperheroSightings.springbootrestjdbctemplatemaven.modeldto.Hero;
 import com.SuperheroSightings.springbootrestjdbctemplatemaven.service.HeroService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -94,5 +95,52 @@ public class HeroController {
     @GetMapping
     public List<Hero> getAllHeroes() {
         return heroService.getAllHeroes();
+    }
+
+    /**
+     * Displays the form to add a new hero.
+     *
+     * API Endpoint: GET http://localhost:8080/hero/new
+     *
+     * @param model The model that holds data for the view.
+     * @return The name of the view template (Thymeleaf template) to be rendered.
+     */
+    @GetMapping("/hero/new")
+    public String showAddForm(Model model) {
+        model.addAttribute("hero", new Hero());
+        return "hero-form";
+    }
+
+    /**
+     * Displays the form to edit an existing hero.
+     *
+     * API Endpoint: GET http://localhost:8080/hero/edit/{id}
+     *
+     * @param id The ID of the hero to be edited.
+     * @param model The model that holds data for the view.
+     * @return The name of the view template (Thymeleaf template) to be rendered.
+     */
+    @GetMapping("/hero/edit/{id}")
+    public String showEditForm(@PathVariable int id, Model model) {
+        Hero hero = heroService.getHeroById(id);
+        model.addAttribute("hero", hero);
+        return "hero-form";
+    }
+    /**
+     * Saves a hero to the database. If the hero has an ID, it updates the existing record, otherwise it adds a new record.
+     *
+     * API Endpoint: POST http://localhost:8080/hero/save
+     *
+     * @param hero The hero object to be saved, constructed from the form data.
+     * @return Redirects to the list of heroes after the hero is saved.
+     */
+    @PostMapping("/hero/save")
+    public String saveHero(@ModelAttribute Hero hero) {
+        if (hero.getId() == null) {
+            heroService.addHero(hero);
+        } else {
+            heroService.updateHero(hero);
+        }
+        return "redirect:/heroes";
     }
 }
