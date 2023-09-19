@@ -67,6 +67,14 @@ public class SightingServiceImpl implements SightingService{
      */
     @Override
     public List<Sighting> getAllSightings() {
-        return sightingDAO.getAllSightings();
+        List<Sighting> sightings = sightingDAO.getAllSightings();
+        System.out.println("Sightings from DAO: " + sightings);
+        return sightings;
     }
+
+    @Override
+    public List<Sighting> getRecentSightings() {
+        return sightingDAO.getRecentSightings();
+    }
+
 }

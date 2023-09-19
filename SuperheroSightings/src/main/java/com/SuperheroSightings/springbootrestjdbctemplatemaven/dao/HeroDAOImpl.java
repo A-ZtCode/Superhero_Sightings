@@ -35,8 +35,8 @@ public class HeroDAOImpl implements HeroDAO {
      */
     @Override
     public Hero addHero(Hero hero) {
-        final String sql = "INSERT INTO Heroes(name, description, superpower) VALUES(?,?,?)";
-        jdbcTemplate.update(sql, hero.getName(), hero.getDescription(), hero.getSuperpower());
+        final String sql = "INSERT INTO Heroes(name, description, superpower, imagePath) VALUES(?,?,?,?)";
+        jdbcTemplate.update(sql, hero.getName(), hero.getDescription(), hero.getSuperpower(), hero.getImagePath());
         int newId = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         hero.setId(newId);
         return hero;
@@ -65,8 +65,8 @@ public class HeroDAOImpl implements HeroDAO {
      */
     @Override
     public void updateHero(Hero hero) {
-        final String sql = "UPDATE Heroes SET name=?, description=?, superpower=? WHERE hero_id=?";
-        int updatedRows = jdbcTemplate.update(sql, hero.getName(), hero.getDescription(), hero.getSuperpower(), hero.getId());
+        final String sql = "UPDATE Heroes SET name=?, description=?, superpower=?, imagePath=? WHERE hero_id=?";
+        int updatedRows = jdbcTemplate.update(sql, hero.getName(), hero.getDescription(), hero.getSuperpower(), hero.getImagePath(), hero.getId());
         if (updatedRows == 0) {
             throw new RuntimeException("Hero with ID " + hero.getId() + " does not exist.");
         }
@@ -123,6 +123,7 @@ public class HeroDAOImpl implements HeroDAO {
             hero.setName(rs.getString("name"));
             hero.setDescription(rs.getString("description"));
             hero.setSuperpower(rs.getString("superpower"));
+            hero.setImagePath(rs.getString("imagePath"));  // Added this line
             return hero;
         }
     }

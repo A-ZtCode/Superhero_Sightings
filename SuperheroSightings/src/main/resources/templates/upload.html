@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Image</title>
+    <!-- Include Bootstrap CSS for styling -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.min.css" rel="stylesheet">
+</head>
+<body>
+<!-- Header -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">HERO Sightings</a>
+    <!-- ... other navbar content ... -->
+</nav>
+
+<div class="container mt-4">
+    <!-- Image Upload Form -->
+    <form th:action="@{/upload}" method="post" enctype="multipart/form-data">
+        <div class="fallback">
+            <input name="heroImage" type="file" multiple />
+        </div>
+        <!-- Hidden input for hero ID -->
+        <input type="hidden" name="heroId" th:value="${hero.id}" />
+        <button type="submit" class="btn btn-primary">Upload Image</button>
+    </form>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3">
+    © 2023 HERO Sightings
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.min.js"></script>
+</body>
+</html>

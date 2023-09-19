@@ -29,6 +29,8 @@ CREATE TABLE Heroes (
     superpower VARCHAR(255) NOT NULL
 );
 
+ALTER TABLE Heroes ADD imagePath VARCHAR(255);
+
 -- Create Organizations table
 CREATE TABLE Organizations (
     organization_id INT AUTO_INCREMENT PRIMARY KEY,

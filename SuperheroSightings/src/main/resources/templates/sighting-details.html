@@ -1,12 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+  <meta charset="UTF-8">
   <title>Sighting Details</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-<h1 th:text="${sighting.hero.name} + ' Sighting'"></h1>
-<p><strong>Location:</strong> <span th:text="${sighting.location.name}"></span></p>
-<p><strong>Date:</strong> <span th:text="${sighting.date}"></span></p>
-<a href="/sightings">Back to Sightings List</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">HERO Sightings</a>
+</nav>
+
+<div class="container mt-4">
+  <h1 th:text="${sighting.hero.name} + ' Sighting'"></h1>
+  <p><strong>Location:</strong> <span th:text="${sighting.location.name}"></span></p>
+  <p><strong>Date:</strong> <span th:text="${sighting.date}"></span></p>
+  <a href="/sightings" class="btn btn-secondary">Back to Sightings List</a>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3">
+  © 2023 HERO Sightings
+</footer>
 </body>
 </html>

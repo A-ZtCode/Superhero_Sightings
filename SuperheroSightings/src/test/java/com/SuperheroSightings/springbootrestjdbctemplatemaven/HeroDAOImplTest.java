@@ -47,7 +47,7 @@ public class HeroDAOImplTest {
         hero.setDescription("Man of Steel");
         hero.setSuperpower("Flight");
 
-        when(jdbcTemplate.update(anyString(), any(), any(), any())).thenReturn(1);
+        when(jdbcTemplate.update(anyString(), eq(hero.getName()), eq(hero.getDescription()), eq(hero.getSuperpower()), isNull())).thenReturn(1);
         when(jdbcTemplate.queryForObject(anyString(), eq(Integer.class))).thenReturn(1);
 
         Hero result = heroDAO.addHero(hero);
@@ -89,11 +89,11 @@ public class HeroDAOImplTest {
         hero.setDescription("Dark Knight");
         hero.setSuperpower("Intelligence");
 
-        when(jdbcTemplate.update(anyString(), any(), any(), any(), anyInt())).thenReturn(1);
+        when(jdbcTemplate.update(anyString(), eq(hero.getName()), eq(hero.getDescription()), eq(hero.getSuperpower()), isNull(), eq(hero.getId()))).thenReturn(1);
 
         heroDAO.updateHero(hero);
 
-        verify(jdbcTemplate, times(1)).update(anyString(), eq(hero.getName()), eq(hero.getDescription()), eq(hero.getSuperpower()), eq(hero.getId()));
+        verify(jdbcTemplate, times(1)).update(anyString(), eq(hero.getName()), eq(hero.getDescription()), eq(hero.getSuperpower()), isNull(), eq(hero.getId()));
     }
 
     /**
@@ -114,8 +114,9 @@ public class HeroDAOImplTest {
     @Test
     public void testGetAllHeroes() {
         List<Hero> heroes = List.of(
-                new Hero(1, "Superman", "Man of Steel", "Flight"),
-                new Hero(2, "Batman", "Dark Knight", "Intelligence")
+                new Hero(1, "Superman", "Man of Steel", "Flight", "/path/to/superman/image"),
+                new Hero(2, "Batman", "Dark Knight", "Intelligence", "/path/to/batman/image")
+
         );
 
         when(jdbcTemplate.query(anyString(), any(RowMapper.class))).thenReturn(heroes);

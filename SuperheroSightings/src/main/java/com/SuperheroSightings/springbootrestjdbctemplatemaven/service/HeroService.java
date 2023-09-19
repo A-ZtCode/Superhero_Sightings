@@ -3,6 +3,8 @@ package com.SuperheroSightings.springbootrestjdbctemplatemaven.service;
 import com.SuperheroSightings.springbootrestjdbctemplatemaven.modeldto.Hero;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -56,4 +58,7 @@ public interface HeroService {
      * @return A list containing all the hero objects.
      */
     List<Hero> getAllHeroes();
+
+    void saveImage(InputStream inputStream, String fileName) throws IOException;
+
 }

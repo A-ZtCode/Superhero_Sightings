@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -35,9 +36,13 @@ public class OrganizationController {
      * @param organization Organization object containing details of the organization to be created.
      * @return Created organization with the assigned ID.
      */
-    @PostMapping
-    public Organization addOrganization(@RequestBody Organization organization) {
-        return organizationService.addOrganization(organization);
+    @PostMapping("/add")
+    public String addOrganization(@ModelAttribute Organization organization, @RequestParam("file") MultipartFile file) {
+        if (!file.isEmpty()) {
+            // Handle file storage, save the path in the organization object
+        }
+        organizationService.addOrganization(organization);
+        return "redirect:/organizations/list";
     }
 
     /**
@@ -63,10 +68,14 @@ public class OrganizationController {
      * @param organization Organization object containing updated details.
      * @return Updated organization details.
      */
-    @PutMapping("/{id}")
-    public Organization updateOrganization(@PathVariable int id, @RequestBody Organization organization) {
+    @PutMapping("/update/{id}")
+    public String updateOrganization(@PathVariable int id, @ModelAttribute Organization organization, @RequestParam("file") MultipartFile file) {
+        if (!file.isEmpty()) {
+            // Handle file storage, save the path in the organization object
+        }
         organization.setId(id);
-        return organizationService.updateOrganization(organization);
+        organizationService.updateOrganization(organization);
+        return "redirect:/organizations/list";
     }
 
     /**
@@ -94,6 +103,13 @@ public class OrganizationController {
         return organizationService.getAllOrganizations();
     }
 
+    // Add a new method to display organizations in a template
+    @GetMapping("/list")
+    public String displayAllOrganizations(Model model) {
+        List<Organization> organizations = organizationService.getAllOrganizations();
+        model.addAttribute("organizations", organizations);
+        return "organization-list";  // name of the Thymeleaf template
+    }
     /**
      * Displays the form to add a new organization.
      *
@@ -142,4 +158,12 @@ public class OrganizationController {
         }
         return "redirect:/organizations"; // Redirect to the list of organizations
     }
-}
+
+        @GetMapping("/details/{id}")
+        public String displayOrganizationDetails(@PathVariable int id, Model model) {
+            Organization organization = organizationService.getOrganizationById(id);
+            model.addAttribute("organization", organization);
+            return "organization-details";  // name of the Thymeleaf template for individual organization details
+        }
+
+    }

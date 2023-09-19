@@ -42,7 +42,7 @@ public class SightingDAOImplTest {
     @Test
     public void testAddSighting() {
         Sighting sighting = new Sighting();
-        sighting.setHero(new Hero(1, "Superman", "Man of Steel", "Flight"));
+        sighting.setHero(new Hero(1, "Superman", "Man of Steel", "Flight", "/path/to/superman/image"));
         sighting.setLocation(new Location(1, "Gotham City", "Dark and Brooding", "123 Gotham Street", 40.7128, -74.0060));
         sighting.setDate(LocalDate.now());
 
@@ -61,7 +61,7 @@ public class SightingDAOImplTest {
     public void testGetSightingById() {
         Sighting sighting = new Sighting();
         sighting.setId(1);
-        sighting.setHero(new Hero(1, "Superman", "Man of Steel", "Flight"));
+        sighting.setHero(new Hero(1, "Superman", "Man of Steel", "Flight", "/path/to/superman/image"));
         sighting.setLocation(new Location(1, "Gotham City", "Dark and Brooding", "123 Gotham Street", 40.7128, -74.0060));
         sighting.setDate(LocalDate.now());
 
@@ -78,7 +78,7 @@ public class SightingDAOImplTest {
     public void testUpdateSighting() {
         Sighting sighting = new Sighting();
         sighting.setId(1);
-        sighting.setHero(new Hero(2, "Batman", "Dark Knight", "Intelligence"));
+        sighting.setHero(new Hero(2, "Batman", "Dark Knight", "Intelligence", "/path/to/batman/image"));
         sighting.setLocation(new Location(2, "Metropolis", "City of Tomorrow", "456 Metropolis Street", 40.7654, -74.9876));
         sighting.setDate(LocalDate.now().minusDays(1));
 
@@ -134,7 +134,7 @@ public class SightingDAOImplTest {
     public void testUpdateNonExistentSighting() {
         Sighting sighting = new Sighting();
         sighting.setId(999); // non-existent ID
-        sighting.setHero(new Hero(1, "Spiderman", "Wall-crawler", "Web-slinging"));
+        sighting.setHero(new Hero(1, "Spiderman", "Wall-crawler", "Web-slinging", "/path/to/spiderman/image"));
         sighting.setLocation(new Location(1, "New York City", "Big Apple", "123 NYC Street", 40.7128, -74.0060));
         sighting.setDate(LocalDate.now());
 

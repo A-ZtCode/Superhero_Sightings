@@ -56,4 +56,12 @@ public interface SightingService {
      * @return a list containing all sightings.
      */
     List<Sighting> getAllSightings();
+
+    /**
+     * Retrieves the 10 most recent sightings.
+     *
+     * @return a list containing the 10 most recent sightings.
+     */
+    List<Sighting> getRecentSightings();
+
 }

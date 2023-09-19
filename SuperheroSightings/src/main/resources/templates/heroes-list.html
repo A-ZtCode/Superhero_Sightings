@@ -1,31 +1,86 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Heroes List</title>
+    <meta charset="UTF-8">
+    <title>Superheroes</title>
+    <!-- Include Bootstrap CSS for styling -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Include Dropzone CSS for styling -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.min.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </head>
 <body>
-<h1>Heroes</h1>
-<table>
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Superpower</th>
-    <th>Actions</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="hero : ${heroes}">
-    <td th:text="${hero.name}"></td>
-    <td th:text="${hero.description}"></td>
-    <td th:text="${hero.superpower}"></td>
-    <td>
-      <a th:href="@{/heroes/edit/{id}(id=${hero.id})}">Edit</a>
-      <a th:href="@{/heroes/delete/{id}(id=${hero.id})}">Delete</a>
-    </td>
-  </tr>
-  </tbody>
-</table>
-<a href="/heroes/add">Add New Hero</a>
+<!-- Header -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">HERO Sightings</a>
+    <!-- ... other navbar content ... -->
+</nav>
+
+<div class="container mt-4">
+    <!-- Add New Hero Button -->
+    <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#heroModal">Add New Hero</button>
+
+
+    <!-- Heroes Table -->
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Superpower</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Iterate over the heroes list and populate the table -->
+        <tr th:each="hero : ${heroes}">
+            <td th:text="${hero.name}"></td>
+            <td th:text="${hero.description}"></td>
+            <td th:text="${hero.superpower}"></td>
+            <td>
+                <a th:href="@{'/heroes/edit/' + ${hero.id}}" class="btn btn-warning btn-sm">Edit</a>
+                <a th:href="@{'/heroes/delete/' + ${hero.id}}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3">
+    © 2023 HERO Sightings
+</footer>
+
+<!-- Hero Modal -->
+<div class="modal fade" id="heroModal" tabindex="-1" aria-labelledby="heroModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="heroModalLabel">Add New Hero</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Your Hero Form goes here. This can be the same form from your add hero page -->
+                <form action="/api/uploadHeroImage" class="dropzone" id="heroImageDropzone">
+                <div class="fallback">
+                        <input name="file" type="file" multiple />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Include Dropzone JS for functionality -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.min.js"></script>
 </body>
 </html>

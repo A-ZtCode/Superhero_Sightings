@@ -2,9 +2,16 @@ package com.SuperheroSightings.springbootrestjdbctemplatemaven.service;
 
 import com.SuperheroSightings.springbootrestjdbctemplatemaven.dao.HeroDAO;
 import com.SuperheroSightings.springbootrestjdbctemplatemaven.modeldto.Hero;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 /**
@@ -18,7 +25,20 @@ import java.util.List;
  */
 @Service
 public class HeroServiceImpl implements HeroService {
+    private final Path root = Paths.get("images");
 
+    public void saveImage(InputStream inputStream, String fileName) throws IOException {
+        Files.copy(inputStream, this.root.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+    }
+
+    @PostConstruct
+    public void init() {
+        try {
+            Files.createDirectory(root);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not initialize folder for upload!");
+        }
+    }
     private final HeroDAO heroDAO;
 
     /**

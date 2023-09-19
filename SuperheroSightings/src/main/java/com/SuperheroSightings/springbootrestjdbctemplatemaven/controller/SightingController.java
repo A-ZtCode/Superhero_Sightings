@@ -94,6 +94,23 @@ public class SightingController {
         return sightingService.getAllSightings();
     }
 
+
+    // New method to display sightings in a template
+    @GetMapping("/sightings/list")
+    public String displayAllSightings(Model model) {
+        List<Sighting> sightings = sightingService.getAllSightings();
+        model.addAttribute("sightings", sightings);
+        return "sightings-list";  // name of the Thymeleaf template
+    }
+
+    @GetMapping("/details/{id}")
+    public String displaySightingDetails(@PathVariable int id, Model model) {
+        Sighting sighting = sightingService.getSightingById(id);
+        model.addAttribute("sighting", sighting);
+        return "sighting-details";  // name of the Thymeleaf template for individual sighting details
+    }
+
+
     /**
      * Displays the form to add a new sighting.
      *

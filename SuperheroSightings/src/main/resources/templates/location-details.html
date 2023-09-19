@@ -1,12 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+  <meta charset="UTF-8">
   <title>Location Details</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-<h1 th:text="${location.name}"></h1>
-<p><strong>Description:</strong> <span th:text="${location.description}"></span></p>
-<p><strong>Address:</strong> <span th:text="${location.address}"></span></p>
-<a href="/locations">Back to Locations List</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">HERO Sightings</a>
+</nav>
+
+<div class="container mt-4">
+  <h1 th:text="${location.name}"></h1>
+  <p><strong>Description:</strong> <span th:text="${location.description}"></span></p>
+  <p><strong>Address:</strong> <span th:text="${location.address}"></span></p>
+  <a href="/locations" class="btn btn-secondary">Back to Locations List</a>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3">
+  © 2023 HERO Sightings
+</footer>
 </body>
 </html>

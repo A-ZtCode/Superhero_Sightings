@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>HERO Sightings</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Additional custom styles -->
+  <style>
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 2.1rem;  /* Adjust the font size to match the size of the logo */
+    }
+    .hover-shadow:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    }
+
+    header, footer {
+      background-color: black;
+      color: white;
+    }
+    body {
+      background-color: white;
+    }
+    .nav-link-custom {
+      font-size: 21px; /* Adjust this value as desired */
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header / Navbar -->
+<header class="p-3">
+  <div class="container">
+    <!-- Logo -->
+    <div class="float-left logo">
+      <img src="/static/Superhero_SightingsLogo.png" alt="HERO Sightings Logo" style="height: 60px; margin-right: 30px;">
+      HERO Sightings
+    </div>
+    <nav class="float-right">
+      <a href="/superheroes" class="text-white mx-2  nav-link-custom">Superheroes</a>
+      <a href="/locations" class="text-white mx-2  nav-link-custom">Locations</a>
+      <a href="/organizations" class="text-white mx-2  nav-link-custom">Organizations</a>
+      <a href="/sightings" class="text-white mx-2  nav-link-custom">Sightings</a>
+    </nav>
+    <div class="clearfix"></div>
+  </div>
+</header>
+
+
+<!-- Newsfeed Section -->
+<section class="container my-5">
+  <h2 class="mb-4">Recent Sightings</h2>
+  <ul class="list-unstyled" th:if="${sightings.size() > 0}">
+    <li class="card mb-3 rounded shadow-sm hover-shadow" th:each="sighting : ${sightings}">
+      <div class="card-body">
+        <img th:src="${sighting.hero.imagePath}" alt="Hero Image" class="float-left mr-3 rounded" style="width: 100px; height: 100px;">
+        <h5 class="card-title" th:text="${sighting.hero.name}"></h5>
+        <p class="card-text">
+          <span th:text="${sighting.location.name}"></span>
+          <span th:text="${sighting.date}"></span>
+        </p>
+      </div>
+    </li>
+  </ul>
+  <p th:if="${sightings.size() == 0}">No recent sightings available.</p>
+</section>
+
+
+<!-- Map Section -->
+<section class="container my-5">
+  <h2 class="mb-4">Sightings on Map</h2>
+  <div id="map" style="height: 400px;">
+    <!-- Google Maps integration goes here -->
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="p-3">
+  <div class="container text-center">
+    <nav>
+      <a href="#" class="text-white mx-2">About Us</a>
+      <a href="#" class="text-white mx-2">Contact</a>
+      <a href="#" class="text-white mx-2">Terms of Service</a>
+    </nav>
+    <p>&copy; 2023 HERO Sightings</p>
+  </div>
+</footer>
+
+<!-- Bootstrap JS (optional) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  var sightings = /*[[${sightings}]]*/ [];
+  console.log(sightings);
+  /*]]>*/
+</script>
+
+<script>
+  function initMap() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 4,
+      center: { lat: 20, lng: 0 }
+    });
+
+    // Loop through the sightings data and place markers
+    for(var i = 0; i < sightings.length; i++) {
+      var sighting = sightings[i];
+      var marker = new google.maps.Marker({
+        position: { lat: parseFloat(sighting.location.latitude), lng: parseFloat(sighting.location.longitude) },
+        map: map,
+        title: sighting.hero.name
+      });
+    }
+  }
+</script>
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATwMYll-r2XNiNnWGapmILy1yhI-v0UaI&callback=initMap">
+</script>
+</body>
+</html>
+

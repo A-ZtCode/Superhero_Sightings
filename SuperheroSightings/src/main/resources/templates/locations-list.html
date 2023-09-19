@@ -1,31 +1,80 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+  <meta charset="UTF-8">
   <title>Locations</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.min.css" rel="stylesheet">
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </head>
 <body>
-<h1>Locations</h1>
-<table>
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-    <th>Address</th>
-    <th>Actions</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="location : ${locations}">
-    <td th:text="${location.name}"></td>
-    <td th:text="${location.description}"></td>
-    <td th:text="${location.address}"></td>
-    <td>
-      <a th:href="@{/locations/{id}(id=${location.id})}">View</a>
-      <!-- Similarly, you can add Edit and Delete links here. -->
-    </td>
-  </tr>
-  </tbody>
-</table>
-<a href="/locations/new">Add New Location</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">HERO Sightings</a>
+</nav>
+
+<div class="container mt-4">
+  <!-- Add New Location Button -->
+  <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#locationModal">Add New Location</button>
+
+  <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Address</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="location : ${locations}">
+      <td th:text="${location.name}"></td>
+      <td th:text="${location.description}"></td>
+      <td th:text="${location.address}"></td>
+      <td>
+        <a th:href="@{'/locations/view/' + ${location.id}}" class="btn btn-info btn-sm">View</a>
+        <a th:href="@{'/locations/edit/' + ${location.id}}" class="btn btn-warning btn-sm">Edit</a>
+        <a th:href="@{'/locations/delete/' + ${location.id}}" class="btn btn-danger btn-sm">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3">
+  © 2023 HERO Sightings
+</footer>
+<!-- Location Modal -->
+<div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="locationModalLabel">Add New Location</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Your Location Form goes here. The same form from  add location page -->
+        <form action="/api/uploadLocationImage" class="dropzone" id="locationImageDropzone">
+        <div class="fallback">
+            <input name="file" type="file" multiple />
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.min.js"></script>
 </body>
 </html>

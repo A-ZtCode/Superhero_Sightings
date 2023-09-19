@@ -74,4 +74,7 @@ public interface SightingDAO {
      * @return List of sightings of the specified hero.
      */
     List<Sighting> getSightingsByHeroId(int heroId);
+
+    List<Sighting> getRecentSightings();
+
 }

@@ -62,7 +62,9 @@ public class SightingDAOImpl implements SightingDAO {
     @Override
     public List<Sighting> getAllSightings() {
         final String sql = "SELECT s.sighting_id, s.date, h.hero_id, h.name as hero_name, h.description as hero_description, h.superpower, l.location_id, l.name as location_name, l.description as location_description, l.address, l.latitude, l.longitude FROM Sightings s JOIN Heroes h ON s.hero_id = h.hero_id JOIN Locations l ON s.location_id = l.location_id";
-        return jdbcTemplate.query(sql, new SightingMapper());
+        List<Sighting> sightings = jdbcTemplate.query(sql, new SightingMapper());
+        System.out.println("DAO - Sightings from the database: " + sightings);
+        return sightings;
     }
 
 
@@ -113,9 +115,14 @@ public class SightingDAOImpl implements SightingDAO {
         return jdbcTemplate.query(sql, new SightingMapper(), heroId);
     }
 
-    /**
-     * RowMapper implementation for mapping rows of the Sightings table into Sighting objects.
-     */
+    public List<Sighting> getRecentSightings() {
+        final String sql = "SELECT * FROM Sightings ORDER BY date DESC LIMIT 10;";
+
+        return jdbcTemplate.query(sql, new SightingMapper());
+    }
+        /**
+         * RowMapper implementation for mapping rows of the Sightings table into Sighting objects.
+         */
     private static final class SightingMapper implements RowMapper<Sighting> {
 
         /**

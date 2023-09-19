@@ -101,6 +101,21 @@ public class LocationController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @GetMapping("/details/{id}")
+    public String displayLocationDetails(@PathVariable int id, Model model) {
+        Location location = locationService.getLocationById(id);
+        model.addAttribute("location", location);
+        return "location-details";  // name of the Thymeleaf template for individual location details
+    }
+
+    // New method to display locations in a template
+    @GetMapping("/list")
+    public String displayAllLocations(Model model) {
+        List<Location> locations = locationService.getAllLocations();
+        model.addAttribute("locations", locations);
+        return "location-crud";  // name of the Thymeleaf template
+    }
+
     /**
      * Displays the form to add a new location.
      *
