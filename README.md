@@ -1,5 +1,5 @@
 # Superhero_Sightings - On-going.
-## Superhero Sightings Part 1 - Data Layer
+## Superhero Sightings - Backend.
 
 ### Requirements
 With the rising popularity of superhero movies, there has been a heightened awareness of superheroes in our midst. The frequency of superhero (and supervillain) sightings is increasing at an alarming rate. Given this development, the Hero Education and Relationship Organization (HERO) has asked our company to develop a database and data layer for their new superhero sightings web application.
@@ -40,7 +40,7 @@ With the rising popularity of superhero movies, there has been a heightened awar
     - Implementation must make proper use of transactions.
     - Unit tests must fully test all create, read, update, and delete functionality for all entities and test all many-to-many and one-to-many relationships in the database.
 
-## Superhero Sightings Part 2 - Spring Boot Web App
+## Superhero Sightings Front-End - Spring Boot Web App
 
 ### Requirements
 The Hero Education and Relationship Organization (HERO) is so impressed with the work we did on the Superhero Sightings Data Layer project that they have awarded us a contract to build a Spring Boot web application.
